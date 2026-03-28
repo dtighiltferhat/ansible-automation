@@ -1,0 +1,10 @@
+*.retry
+*.pyc
+__pycache__/
+.vault_pass
+vault_pass.txt
+*.vault
+secrets/
+inventory/host_vars/*/vault.yml
+.env
+.DS_Store
