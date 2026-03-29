@@ -1,0 +1,10 @@
+---
+# inventory/group_vars/prod_servers.yml
+# Prod-specific overrides — stricter settings
+
+environment: prod
+docker_log_max_size: "200m"
+docker_log_max_files: "5"
+
+# Restrict SSH to known CIDR only in prod
+allow_ssh_from: "10.2.0.0/16"

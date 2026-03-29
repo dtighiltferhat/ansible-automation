@@ -1,0 +1,10 @@
+---
+# inventory/group_vars/dev_servers.yml
+# Dev-specific overrides
+
+environment: dev
+docker_log_max_size: "50m"
+node_exporter_port: 9100
+
+# Less restrictive firewall rules in dev
+allow_ssh_from: "0.0.0.0/0"
