@@ -1,0 +1,30 @@
+---
+# inventory/group_vars/all.yml
+# Variables applied to ALL hosts across all environments
+
+# System
+timezone: "America/New_York"
+ntp_servers:
+  - 0.pool.ntp.org
+  - 1.pool.ntp.org
+
+# User management
+ansible_user: ubuntu
+ansible_ssh_private_key_file: "~/.ssh/id_rsa"
+ansible_python_interpreter: /usr/bin/python3
+
+# Docker
+docker_version: "24.0"
+docker_log_max_size: "100m"
+docker_log_max_files: "3"
+
+# Kubernetes
+kubernetes_version: "1.28"
+pod_network_cidr: "10.244.0.0/16"
+
+# Monitoring
+node_exporter_version: "1.6.1"
+node_exporter_port: 9100
+
+# AWS
+aws_region: "us-east-1"
