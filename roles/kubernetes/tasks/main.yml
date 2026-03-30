@@ -1,0 +1,43 @@
+---
+# roles/kubernetes/tasks/main.yml
+# Installs kubeadm, kubelet, kubectl on all K8s nodes
+
+- name: Add Kubernetes GPG key
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+
+- name: Add Kubernetes apt repository
+  apt_repository:
+    repo: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
+    state: present
+    update_cache: yes
+
+- name: Install Kubernetes components
+  apt:
+    name:
+      - "kubelet={{ kubernetes_version }}.*"
+      - "kubeadm={{ kubernetes_version }}.*"
+      - "kubectl={{ kubernetes_version }}.*"
+    state: present
+
+- name: Hold Kubernetes packages at current version
+  dpkg_selections:
+    name: "{{ item }}"
+    selection: hold
+  loop:
+    - kubelet
+    - kubeadm
+    - kubectl
+
+- name: Configure kubelet cgroup driver to match Docker
+  copy:
+    dest: /etc/default/kubelet
+    content: |
+      KUBELET_EXTRA_ARGS=--cgroup-driver=systemd
+
+- name: Enable and start kubelet
+  systemd:
+    name: kubelet
+    enabled: yes
+    state: started
